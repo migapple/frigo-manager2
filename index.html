@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-title" content="Frigo Manager">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" href="apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
     <title>Frigo Manager - Scanner</title>
     <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.8.4/dist/quagga.min.js"></script>
     <style>
@@ -73,13 +72,13 @@
                 padding: 0 70px; /* Plus d'espace pour les boutons */
             }
             .language-selector {
-                top: 10px; /* Descendre un peu le bouton */
+                top: 55px; /* Aligné avec le sous-titre "Scanner de code-barres" */
                 left: 8px;
                 font-size: 12px;
                 padding: 6px 10px;
             }
             .settings-btn {
-                top: 10px; /* Même hauteur que le bouton de langue */
+                top: 55px; /* Même hauteur que le bouton de langue */
                 right: 8px;
                 font-size: 20px;
                 padding: 6px 10px;
@@ -103,6 +102,11 @@
             /* Cacher les emojis sur mobile */
             .btn-emoji {
                 display: none;
+            }
+            /* Bouton GO plus compact sur mobile */
+            .search-btn {
+                padding: 15px 20px;
+                font-size: 16px;
             }
         }
         
@@ -138,7 +142,7 @@
         
         .language-selector {
             position: absolute;
-            top: 5px;
+            top: 50px; /* Aligné avec le sous-titre "Scanner de code-barres" */
             left: 5px;
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid white;
@@ -161,7 +165,7 @@
         
         .settings-btn {
             position: absolute;
-            top: 5px;
+            top: 50px; /* Même hauteur que le bouton de langue */
             right: 5px;
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid white;
@@ -380,8 +384,17 @@
         }
         
         .btn-manual-entry {
-            background: white;
-            color: #333;
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 15px 25px;
+            border: 2px solid white;
+        }
+        
+        .btn-manual-entry:hover {
+            background: #5568d3;
+            transform: scale(1.05);
         }
         
         .loading {
@@ -480,13 +493,15 @@
         }
         
         .search-wrapper {
-            position: relative;
+            display: flex;
+            gap: 10px;
             width: 100%;
+            align-items: center;
         }
         
         .search-input {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
+            flex: 1;
+            padding: 15px 20px;
             font-size: 16px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
@@ -506,18 +521,33 @@
             color: #9ca3af;
         }
         
+        .search-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+        
+        .search-btn:active {
+            transform: scale(0.95);
+            background: #059669;
+        }
+        
         .clear-search-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
             background: #ef4444;
             color: white;
             border: none;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 16px;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -623,7 +653,7 @@
         .item-card {
             background: white;
             border-radius: 15px;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border: 3px solid transparent;
         }
@@ -648,6 +678,7 @@
             height: 180px;
             object-fit: cover;
             background: #f0f0f0;
+            border-radius: 15px 15px 0 0;
         }
         
         .item-content {
@@ -801,6 +832,68 @@
             margin: 5px 5px 5px 0;
         }
         
+        /* Badges de santé */
+        .health-badges {
+            display: flex !important;
+            flex-wrap: nowrap; /* Une seule ligne ! */
+            gap: 3px;
+            margin: 10px 0;
+            width: 100%;
+            overflow-x: auto; /* Scroll horizontal si vraiment trop large */
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .health-badge {
+            display: inline-block !important;
+            padding: 4px 8px; /* Réduit de 10px à 8px */
+            border-radius: 12px;
+            font-size: 0.7em; /* Réduit de 0.8em à 0.7em */
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            visibility: visible !important;
+            opacity: 1 !important;
+            white-space: nowrap; /* Empêche le texte de passer à la ligne */
+            flex-shrink: 0; /* Empêche les badges de rétrécir */
+        }
+        
+        /* Nutri-Score */
+        .nutri-a { background: #038141; }
+        .nutri-b { background: #85bb2f; }
+        .nutri-c { background: #fecb02; color: #333; }
+        .nutri-d { background: #ee8100; }
+        .nutri-e { background: #e63e11; }
+        
+        /* Eco-Score */
+        .eco-a { background: #038141; }
+        .eco-b { background: #85bb2f; }
+        .eco-c { background: #fecb02; color: #333; }
+        .eco-d { background: #ee8100; }
+        .eco-e { background: #e63e11; }
+        .eco-f { background: #b91c1c; } /* Rouge très foncé - pire que E */
+        
+        /* NOVA Group */
+        .nova-1 { background: #038141; }
+        .nova-2 { background: #85bb2f; }
+        .nova-3 { background: #ee8100; }
+        .nova-4 { background: #e63e11; }
+        
+        /* Additives */
+        .additives-badge {
+            background: #6b7280;
+        }
+        .additives-high {
+            background: #ef4444;
+        }
+        
+        /* Badge inconnu */
+        .health-badge-unknown {
+            background: #d1d5db !important;
+            color: #6b7280 !important;
+            display: inline-block !important;
+            visibility: visible !important;
+        }
+        
         .alert-banner {
             background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
             color: white;
@@ -824,6 +917,15 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
             }
         }
         
@@ -934,13 +1036,30 @@
         
         .renouveler-badge {
             display: inline-block;
-            background: #f59e0b;
-            color: white;
+            background: #e5e7eb;
+            color: #6b7280;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.9em;
             font-weight: 600;
             margin: 5px 5px 5px 0;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .renouveler-badge.active {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .renouveler-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .renouveler-badge:active {
+            transform: scale(0.95);
         }
         
         .quantity-controls {
@@ -1641,6 +1760,12 @@
                 </div>
                 
                 <div class="settings-section">
+                    <h4>📊 Informations santé</h4>
+                    <button class="btn" onclick="showHealthGuide()" style="background: #059669; margin-bottom: 10px;">📚 Comprendre les scores</button>
+                    <p style="font-size: 0.85em; color: #666; margin: 10px 0;">Nutri-Score, NOVA, Additifs, Eco-Score expliqués</p>
+                </div>
+                
+                <div class="settings-section">
                     <h4>🗑️ Données</h4>
                     <button class="btn" onclick="confirmDeleteAll()" style="background: #ef4444;">Supprimer toutes les données</button>
                     <p style="font-size: 0.85em; color: #666; margin: 10px 0;">Attention : cette action est irréversible</p>
@@ -1651,7 +1776,8 @@
                     <div style="text-align: center; margin: 15px 0;">
                         <div style="font-size: 3em; margin-bottom: 10px;">🧊</div>
                         <div style="font-size: 1.2em; font-weight: bold; color: #0369a1; margin-bottom: 5px;">Frigo Manager</div>
-                        <div style="font-size: 0.9em; color: #64748b; margin-bottom: 15px;">Version 1.0</div>
+                        <div style="font-size: 0.9em; color: #64748b; margin-bottom: 10px;" id="versionDisplay">Version 2.1.0</div>
+                        <button class="btn" onclick="showChangelog()" style="background: #0ea5e9; padding: 8px 16px; font-size: 0.85em; margin-bottom: 10px;">🎉 Quoi de neuf ?</button>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 10px; margin: 10px 0;">
                         <div style="font-size: 0.95em; color: #334155; margin-bottom: 8px;">
@@ -1673,6 +1799,161 @@
         </div>
 
         <div id="alertBanner" class="alert-banner"></div>
+        
+        <!-- Modal Guide Santé -->
+        <div id="healthGuide" class="settings-menu">
+            <div class="settings-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+                <h3 style="margin-top: 0; color: #667eea;">📚 Comprendre les Scores de Santé</h3>
+                
+                <!-- Nutri-Score -->
+                <div class="settings-section">
+                    <h4 style="color: #038141;">🥗 Nutri-Score</h4>
+                    <p style="font-size: 0.9em; margin-bottom: 15px;">Évalue la qualité nutritionnelle globale</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nutri-a" style="width: 50px; text-align: center;">A</div>
+                            <span style="font-size: 0.9em;">Excellente qualité nutritionnelle</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nutri-b" style="width: 50px; text-align: center;">B</div>
+                            <span style="font-size: 0.9em;">Bonne qualité nutritionnelle</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nutri-c" style="width: 50px; text-align: center;">C</div>
+                            <span style="font-size: 0.9em;">Qualité nutritionnelle moyenne</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nutri-d" style="width: 50px; text-align: center;">D</div>
+                            <span style="font-size: 0.9em;">Mauvaise qualité nutritionnelle</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nutri-e" style="width: 50px; text-align: center;">E</div>
+                            <span style="font-size: 0.9em;">Très mauvaise qualité nutritionnelle</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px; background: #f3f4f6; padding: 10px; border-radius: 8px;">
+                        <strong>💡 Astuce :</strong> Privilégiez les produits A et B. Le Nutri-Score prend en compte les nutriments positifs (fibres, protéines, fruits/légumes) et négatifs (sucres, graisses saturées, sel, calories).
+                    </p>
+                </div>
+                
+                <!-- NOVA -->
+                <div class="settings-section">
+                    <h4 style="color: #038141;">🔬 NOVA Group</h4>
+                    <p style="font-size: 0.9em; margin-bottom: 15px;">Niveau de transformation du produit</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nova-1" style="width: 50px; text-align: center;">1</div>
+                            <span style="font-size: 0.9em;">Aliments bruts (fruits, légumes, viande)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nova-2" style="width: 50px; text-align: center;">2</div>
+                            <span style="font-size: 0.9em;">Ingrédients culinaires (huile, beurre)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nova-3" style="width: 50px; text-align: center;">3</div>
+                            <span style="font-size: 0.9em;">Aliments transformés (conserves, pain)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge nova-4" style="width: 50px; text-align: center;">4</div>
+                            <span style="font-size: 0.9em;">Ultra-transformés (sodas, plats préparés)</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px; background: #f3f4f6; padding: 10px; border-radius: 8px;">
+                        <strong>💡 Astuce :</strong> Limitez les produits NOVA 4. Les aliments ultra-transformés contiennent souvent beaucoup d'additifs et peu de nutriments essentiels.
+                    </p>
+                </div>
+                
+                <!-- Additifs -->
+                <div class="settings-section">
+                    <h4 style="color: #6b7280;">⚗️ Additifs</h4>
+                    <p style="font-size: 0.9em; margin-bottom: 15px;">Nombre d'additifs dans le produit</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge" style="background: #038141; width: 80px; text-align: center;">0</div>
+                            <span style="font-size: 0.9em;">Sans additif - Idéal</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge additives-badge" style="width: 80px; text-align: center;">1-5</div>
+                            <span style="font-size: 0.9em;">Quelques additifs - Acceptable</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge additives-high" style="width: 80px; text-align: center;">6+</div>
+                            <span style="font-size: 0.9em;">Beaucoup d'additifs - À limiter</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px; background: #f3f4f6; padding: 10px; border-radius: 8px;">
+                        <strong>💡 Astuce :</strong> Les additifs (E100, E200, etc.) sont des colorants, conservateurs, émulsifiants... Tous ne sont pas dangereux, mais moins il y en a, mieux c'est !
+                    </p>
+                </div>
+                
+                <!-- Eco-Score -->
+                <div class="settings-section">
+                    <h4 style="color: #059669;">🌍 Eco-Score</h4>
+                    <p style="font-size: 0.9em; margin-bottom: 15px;">Impact environnemental du produit</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge eco-a" style="width: 50px; text-align: center;">A</div>
+                            <span style="font-size: 0.9em;">Très faible impact environnemental</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge eco-b" style="width: 50px; text-align: center;">B</div>
+                            <span style="font-size: 0.9em;">Faible impact environnemental</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge eco-c" style="width: 50px; text-align: center;">C</div>
+                            <span style="font-size: 0.9em;">Impact environnemental moyen</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge eco-d" style="width: 50px; text-align: center;">D</div>
+                            <span style="font-size: 0.9em;">Impact environnemental élevé</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="health-badge eco-e" style="width: 50px; text-align: center;">E</div>
+                            <span style="font-size: 0.9em;">Très fort impact environnemental</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px; background: #f3f4f6; padding: 10px; border-radius: 8px;">
+                        <strong>💡 Astuce :</strong> L'Eco-Score prend en compte les émissions CO2, le transport, l'emballage et l'origine des ingrédients. Favorisez les produits locaux et de saison !
+                    </p>
+                </div>
+                
+                <!-- Exemples -->
+                <div class="settings-section" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #22c55e;">
+                    <h4 style="color: #15803d;">✅ Exemples de Bons Produits</h4>
+                    <div style="font-size: 0.9em; color: #166534;">
+                        <div style="margin: 8px 0;">🍎 <strong>Pommes :</strong> Nutri A, NOVA 1, 0 additif</div>
+                        <div style="margin: 8px 0;">🥕 <strong>Carottes :</strong> Nutri A, NOVA 1, 0 additif</div>
+                        <div style="margin: 8px 0;">🥛 <strong>Yaourt nature :</strong> Nutri A, NOVA 1, 0 additif</div>
+                        <div style="margin: 8px 0;">🍋 <strong>Lentilles :</strong> Nutri A, NOVA 1, 0 additif</div>
+                    </div>
+                </div>
+                
+                <div class="settings-section" style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border: 2px solid #ef4444;">
+                    <h4 style="color: #b91c1c;">❌ Exemples à Limiter</h4>
+                    <div style="font-size: 0.9em; color: #991b1b;">
+                        <div style="margin: 8px 0;">🥤 <strong>Sodas :</strong> Nutri E, NOVA 4, 5+ additifs</div>
+                        <div style="margin: 8px 0;">🍟 <strong>Chips :</strong> Nutri E, NOVA 4, 8+ additifs</div>
+                        <div style="margin: 8px 0;">🍫 <strong>Barres chocolatées :</strong> Nutri E, NOVA 4, 10+ additifs</div>
+                        <div style="margin: 8px 0;">🌭 <strong>Nuggets :</strong> Nutri E, NOVA 4, 12+ additifs</div>
+                    </div>
+                </div>
+                
+                <div style="background: #eff6ff; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #3b82f6;">
+                    <p style="font-size: 0.9em; color: #1e40af; margin: 0;">
+                        <strong>ℹ️ Source des données :</strong> Open Food Facts - Base de données collaborative de 1,8 million de produits utilisée par Yuka et d'autres applications.
+                    </p>
+                </div>
+                
+                <button class="btn" onclick="closeHealthGuide()" style="background: #667eea; color: white; margin-top: 20px; width: 100%;">✓ J'ai compris</button>
+            </div>
+        </div>
+        
+        <!-- Modal Changelog "Quoi de neuf" -->
+        <div id="changelogModal" class="settings-menu">
+            <div class="settings-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;" id="changelogContent">
+                <!-- Le contenu sera généré dynamiquement par JavaScript -->
+            </div>
+        </div>
         
         <div id="notificationPrompt" class="notification-prompt" style="display: none;">
             <div class="notification-prompt-content">
@@ -1870,10 +2151,23 @@
 
         <div id="form" class="form"></div>
 
+        <!-- Zone de debug visible (iOS) -->
+        <div id="debugZone" style="background: #fee; border: 2px solid #f00; padding: 10px; margin: 10px 0; border-radius: 8px; display: none;">
+            <div style="font-weight: bold; color: #f00; margin-bottom: 5px;">🐛 DEBUG iOS</div>
+            <div id="debugLog" style="font-size: 12px; font-family: monospace; color: #333;"></div>
+        </div>
+
         <div class="search-container">
             <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Rechercher un produit...">
-                <button id="clearSearch" class="clear-search-btn" style="display: none;">✕</button>
+                <input type="search" id="searchInput" class="search-input" 
+                       placeholder="🔍 Rechercher..." 
+                       autocomplete="off" 
+                       autocorrect="off" 
+                       autocapitalize="off" 
+                       spellcheck="false"
+                       inputmode="search">
+                <button id="searchButton" class="search-btn" onclick="doSearch()">GO</button>
+                <button id="clearSearch" class="clear-search-btn" style="display: none;" onclick="clearSearchNow()">✕</button>
             </div>
             <div id="searchResults" class="search-results-info" style="display: none;"></div>
             <div id="searchHistory" class="search-history" style="display: none;"></div>
@@ -2009,7 +2303,7 @@
                     deleteAll: "Supprimer toutes les données",
                     deleteWarning: "Attention : cette action est irréversible",
                     about: "À propos",
-                    version: "Version 1.0",
+                    version: "Version 1.2",
                     developer: "Développé par :",
                     powered: "Réalisé à l'aide d'",
                     copyright: "Tous droits réservés",
@@ -2183,7 +2477,7 @@
                     deleteAll: "Delete all data",
                     deleteWarning: "Warning: this action is irreversible",
                     about: "About",
-                    version: "Version 1.0",
+                    version: "Version 1.2",
                     developer: "Developed by:",
                     powered: "Powered by",
                     copyright: "All rights reserved",
@@ -2260,6 +2554,71 @@
         };
         
         var currentLang = localStorage.getItem('language') || 'fr';
+        
+        // === SYSTÈME DE VERSION ===
+        var APP_VERSION = '2.1.1';
+        var VERSION_DATE = '2026-02-13';
+        var CHANGELOG = {
+            '2.1.1': {
+                date: '2026-02-13',
+                changes: {
+                    fr: [
+                        '🎨 Alignement des boutons langue/paramètres avec le sous-titre sur iPhone',
+                        '📱 Amélioration de l\'ergonomie mobile'
+                    ],
+                    en: [
+                        '🎨 Aligned language/settings buttons with subtitle on iPhone',
+                        '📱 Improved mobile ergonomics'
+                    ]
+                }
+            },
+            '2.1.0': {
+                date: '2026-02-13',
+                changes: {
+                    fr: [
+                        '✨ Modification des recettes par défaut (crée une copie)',
+                        '📊 Export Excel inclut maintenant les scores santé',
+                        '🎨 Couleur du bouton "Tous" améliorée (rouge visible)',
+                        '⏰ Calcul automatique des dates de péremption',
+                        '🔄 Recalcul en temps réel des dates',
+                        '📋 Table complète des durées de conservation'
+                    ],
+                    en: [
+                        '✨ Edit default recipes (creates a copy)',
+                        '📊 Excel export now includes health scores',
+                        '🎨 Improved "All" button color (visible red)',
+                        '⏰ Automatic expiration date calculation',
+                        '🔄 Real-time date recalculation',
+                        '📋 Complete storage duration table'
+                    ]
+                }
+            },
+            '2.0.0': {
+                date: '2026-02-11',
+                changes: {
+                    fr: [
+                        '🎯 Calcul intelligent des dates selon catégorie et emplacement',
+                        '🏥 Sauvegarde des scores santé (Nutri-Score, NOVA, Eco-Score)',
+                        '📱 Mode PWA amélioré',
+                        '🌍 Support multilingue FR/EN'
+                    ],
+                    en: [
+                        '🎯 Smart date calculation by category and location',
+                        '🏥 Health scores saved (Nutri-Score, NOVA, Eco-Score)',
+                        '📱 Improved PWA mode',
+                        '🌍 Multilingual support FR/EN'
+                    ]
+                }
+            }
+        };
+        
+        function getVersionInfo() {
+            return {
+                version: APP_VERSION,
+                date: VERSION_DATE,
+                changelog: CHANGELOG[APP_VERSION].changes[currentLang]
+            };
+        }
         
         function t(key) {
             var keys = key.split('.');
@@ -2492,8 +2851,8 @@
         var lastScannedCode = null;
         var scanConfidenceCount = {};
         var scanningActive = false;
-        
-        // === DURÉES DE CONSERVATION (en jours) ===
+
+                // === DURÉES DE CONSERVATION (en jours) ===
         var dureeConservation = {
             'fruit': {
                 'frigo': 7,
@@ -2572,7 +2931,7 @@
         // Fonction pour calculer la nouvelle date selon emplacement + catégorie
         function calculerNouvelleDate(categorie, emplacement) {
             var duree = (dureeConservation[categorie] && dureeConservation[categorie][emplacement]) 
-                       || dureeConservation['autre']['frigo'];
+                       || dureeConservation['autre']['frigo']; // Valeur par défaut
             
             var nouvelleDate = new Date();
             nouvelleDate.setDate(nouvelleDate.getDate() + duree);
@@ -2582,16 +2941,58 @@
         // Fonction pour afficher les durées en texte lisible
         function afficherDuree(jours) {
             if (jours < 7) return jours + ' jour' + (jours > 1 ? 's' : '');
-            if (jours < 30) {
-                var semaines = Math.round(jours / 7);
-                return semaines + ' semaine' + (semaines > 1 ? 's' : '');
+            if (jours < 30) return Math.round(jours / 7) + ' semaine' + (jours > 13 ? 's' : '');
+            if (jours < 365) return Math.round(jours / 30) + ' mois';
+            return Math.round(jours / 365) + ' an' + (jours > 730 ? 's' : '');
+        }
+
+        
+        // FONCTIONS GLOBALES POUR ONCLICK HTML (iOS-friendly)
+        var lastSearchTime = 0;
+        
+        function doSearch() {
+            // Éviter les appels multiples rapides (debounce 300ms)
+            var now = Date.now();
+            if (now - lastSearchTime < 300) {
+                return; // Ignorer si moins de 300ms depuis le dernier appel
             }
-            if (jours < 365) {
-                var mois = Math.round(jours / 30);
-                return mois + ' mois';
+            lastSearchTime = now;
+            
+            var input = document.getElementById('searchInput');
+            var clearBtn = document.getElementById('clearSearch');
+            
+            if (!input) return;
+            
+            var value = input.value.trim();
+            currentSearchTerm = value;
+            
+            // Afficher le bouton clear
+            if (clearBtn) {
+                clearBtn.style.display = value ? 'flex' : 'none';
             }
-            var annees = Math.round(jours / 365);
-            return annees + ' an' + (annees > 1 ? 's' : '');
+            
+            // Lancer la recherche
+            renderItems();
+            
+            // Ajouter à l'historique
+            if (value) {
+                addToSearchHistory(value);
+            }
+            
+            // Fermer le clavier
+            input.blur();
+        }
+        
+        function clearSearchNow() {
+            var input = document.getElementById('searchInput');
+            var clearBtn = document.getElementById('clearSearch');
+            
+            if (input) input.value = '';
+            currentSearchTerm = '';
+            if (clearBtn) clearBtn.style.display = 'none';
+            
+            renderItems();
+            if (input) input.focus();
         }
         
         // Charger l'historique de recherche depuis localStorage
@@ -2998,7 +3399,7 @@
                 if (currentSearchTerm) {
                     var searchLower = removeAccents(currentSearchTerm.toLowerCase());
                     var nomLower = removeAccents((item.nom || '').toLowerCase());
-                    var barcodeLower = (item.barcode || '').toLowerCase();
+                    var barcodeLower = (String(item.barcode || '')).toLowerCase();
                     searchMatch = nomLower.includes(searchLower) || barcodeLower.includes(searchLower);
                 }
                 
@@ -3035,6 +3436,43 @@
                         html += '<div class="emplacement-badge">' + empl.emoji + ' ' + empl.text + '</div>';
                     }
                     
+                    // Afficher les badges de santé (toujours afficher les 4, même si données manquantes)
+                    if (item.barcode) {
+                        html += '<div class="health-badges">';
+                        
+                        // Nutri-Score
+                        if (item.nutriScore) {
+                            html += '<div class="health-badge nutri-' + item.nutriScore.toLowerCase() + '">Nutri ' + item.nutriScore + '</div>';
+                        } else {
+                            html += '<div class="health-badge health-badge-unknown">Nutri ?</div>';
+                        }
+                        
+                        // NOVA Group
+                        if (item.novaGroup) {
+                            html += '<div class="health-badge nova-' + item.novaGroup + '">NOVA ' + item.novaGroup + '</div>';
+                        } else {
+                            html += '<div class="health-badge health-badge-unknown">NOVA ?</div>';
+                        }
+                        
+                        // Additifs
+                        if (item.additives !== undefined && item.additives !== null) {
+                            var additivesClass = item.additives > 5 ? 'additives-high' : 'additives-badge';
+                            var additivesText = item.additives === 0 ? '0 additif' : item.additives + ' additif' + (item.additives > 1 ? 's' : '');
+                            html += '<div class="health-badge ' + additivesClass + '">' + additivesText + '</div>';
+                        } else {
+                            html += '<div class="health-badge health-badge-unknown">? additif</div>';
+                        }
+                        
+                        // Eco-Score
+                        if (item.ecoScore) {
+                            html += '<div class="health-badge eco-' + item.ecoScore.toLowerCase() + '">Eco ' + item.ecoScore + '</div>';
+                        } else {
+                            html += '<div class="health-badge health-badge-unknown">Eco ?</div>';
+                        }
+                        
+                        html += '</div>';
+                    }
+                    
                     // Afficher la quantité
                     var qty = getQuantity(item.quantite);
                     if (qty === 0) {
@@ -3043,10 +3481,10 @@
                         html += '<div class="quantity-badge">📦 ' + (currentLang === 'fr' ? 'Quantité: ' : 'Quantity: ') + qty + '</div>';
                     }
                     
-                    // Afficher le badge "À renouveler"
-                    if (item.aRenouveler) {
-                        html += '<div class="renouveler-badge">📝 À renouveler</div>';
-                    }
+                    // Afficher le badge "À renouveler" (cliquable)
+                    html += '<div class="renouveler-badge ' + (item.aRenouveler ? 'active' : '') + '" data-id="' + item.id + '">';
+                    html += item.aRenouveler ? '📝 À renouveler' : '☐ À renouveler';
+                    html += '</div>';
                     
                     html += '<div class="item-info">📅 Ajouté: ' + new Date(item.dateAjout).toLocaleDateString('fr-FR') + '</div>' +
                             '<div class="item-info">⏰ Expire: ' + (item.datePeremption ? new Date(item.datePeremption).toLocaleDateString('fr-FR') : 'Non indiqué') + '</div>' +
@@ -3103,6 +3541,15 @@
                         changeQuantity(id, 1);
                     };
                 }
+                
+                // Badges "À renouveler" cliquables
+                var renouvelerBadges = itemsEl.querySelectorAll('.renouveler-badge');
+                for (var i = 0; i < renouvelerBadges.length; i++) {
+                    renouvelerBadges[i].onclick = function() {
+                        var id = parseFloat(this.getAttribute('data-id'));
+                        toggleRenouveler(id);
+                    };
+                }
             }
             
             // Afficher le compteur de résultats si recherche active
@@ -3148,6 +3595,17 @@
             saveItems();
             renderAll();
         }
+        
+        function toggleRenouveler(itemId) {
+            var item = items.find(function(it) { return it.id === itemId; });
+            if (!item) return;
+            
+            // Basculer l'état "À renouveler"
+            item.aRenouveler = !item.aRenouveler;
+            
+            saveItems();
+            renderAll();
+        }
 
         function startScanner() {
             var scannerEl = document.getElementById('scanner');
@@ -3183,8 +3641,25 @@
             }, function(err) {
                 if (err) {
                     console.error(err);
-                    alert(t('messages.noCamera'));
-                    stopScanner();
+                    
+                    // Afficher un message d'erreur plus clair avec le bouton saisie manuelle
+                    var scannerInstructions = document.querySelector('.scanner-instructions');
+                    if (scannerInstructions) {
+                        scannerInstructions.innerHTML = 
+                            '<div style="color: #ef4444; font-size: 1.2em; padding: 20px;">' +
+                            '⚠️ Caméra non accessible<br>' +
+                            '<span style="font-size: 0.9em;">Utilisez la saisie manuelle ci-dessous</span>' +
+                            '</div>';
+                    }
+                    
+                    // Rendre le bouton saisie manuelle encore plus visible
+                    var btnManual = document.getElementById('btnManualFromScanner');
+                    if (btnManual) {
+                        btnManual.style.background = '#10b981';
+                        btnManual.style.fontSize = '1.3em';
+                        btnManual.style.animation = 'pulse 1.5s infinite';
+                    }
+                    
                     return;
                 }
                 Quagga.start();
@@ -3272,12 +3747,59 @@
                     
                     if (data.status === 1 && data.product) {
                         var product = data.product;
+                        
+                        // Eco-Score : essayer plusieurs champs possibles
+                        var ecoScore = null;
+                        if (product.ecoscore_grade) {
+                            var ecoValue = product.ecoscore_grade.toUpperCase();
+                            // Nettoyer les valeurs bizarres comme "A-PLUS" → "A"
+                            ecoValue = ecoValue.replace('-PLUS', '').replace('-MINUS', '').trim();
+                            // Vérifier que c'est une lettre A-F valide
+                            if (ecoValue.match(/^[A-F]$/) && ecoValue !== 'NOT-APPLICABLE' && ecoValue !== 'UNKNOWN') {
+                                ecoScore = ecoValue;
+                            }
+                        } else if (product.ecoscoreGrade) {
+                            var ecoValue2 = product.ecoscoreGrade.toUpperCase();
+                            ecoValue2 = ecoValue2.replace('-PLUS', '').replace('-MINUS', '').trim();
+                            if (ecoValue2.match(/^[A-F]$/) && ecoValue2 !== 'NOT-APPLICABLE' && ecoValue2 !== 'UNKNOWN') {
+                                ecoScore = ecoValue2;
+                            }
+                        } else if (product.ecoscore_score !== undefined && product.ecoscore_score !== null) {
+                            // Convertir le score numérique en lettre
+                            if (product.ecoscore_score >= 80) {
+                                ecoScore = 'A';
+                            } else if (product.ecoscore_score >= 60) {
+                                ecoScore = 'B';
+                            } else if (product.ecoscore_score >= 40) {
+                                ecoScore = 'C';
+                            } else if (product.ecoscore_score >= 20) {
+                                ecoScore = 'D';
+                            } else if (product.ecoscore_score >= 0) {
+                                ecoScore = 'E';
+                            }
+                        }
+                        
+                        // Nettoyer Nutri-Score
+                        var nutriValue = null;
+                        if (product.nutriscore_grade) {
+                            var nutriTemp = product.nutriscore_grade.toUpperCase();
+                            // Ignorer les valeurs non valides
+                            if (nutriTemp !== 'NOT-APPLICABLE' && nutriTemp !== 'UNKNOWN' && nutriTemp !== 'NOT-KNOWN' && nutriTemp.match(/^[A-E]$/)) {
+                                nutriValue = nutriTemp;
+                            }
+                        }
+                        
                         currentProductData = {
                             nom: product.product_name || product.generic_name || 'Produit inconnu',
                             image: product.image_url || product.image_front_url || null,
                             categorie: detectCategory(product),
-                            barcode: barcode
+                            barcode: barcode,
+                            nutriScore: nutriValue,
+                            novaGroup: product.nova_group || null,
+                            additives: product.additives_n || 0,
+                            ecoScore: ecoScore
                         };
+                        
                         showForm(currentProductData);
                     } else {
                         alert(t('messages.productNotFound'));
@@ -3331,17 +3853,24 @@
             productData = productData || {};
             var form = document.getElementById('form');
             
-            // Date suggérée : calcul automatique selon catégorie + emplacement
+           // Date suggérée : calcul automatique selon catégorie + emplacement
             var categorie = productData.categorie || 'autre';
-            var defaultEmplacement = productData.emplacement || 'frigo';
-            var suggestedDateStr = calculerNouvelleDate(categorie, defaultEmplacement);
+            var emplacement = defaultEmplacement;
+            var suggestedDate = calculerNouvelleDate(categorie, emplacement);
+            
+            // Emplacement par défaut : utiliser le filtre actuel si sélectionné
+            var defaultEmplacement = productData.emplacement;
+            if (!defaultEmplacement) {
+                // Si un filtre d'emplacement spécifique est actif, l'utiliser
+                defaultEmplacement = (currentEmplacement !== 'all') ? currentEmplacement : 'frigo';
+            }
             
             var html = '<h3>➕ ' + (currentLang === 'fr' ? 'Ajouter un produit' : 'Add product') + '</h3>';
             
             if (productData.barcode) {
                 html += '<div class="barcode-badge clickable" id="barcodeBadgeAdd" style="display: inline-block;">📊 ' + (currentLang === 'fr' ? 'Code-barres: ' : 'Barcode: ') + productData.barcode + '</div>';
                 if (!productData.image) {
-                    html += '<div class="date-suggestion" style="margin-top: 5px;">💡 ' + (currentLang === 'fr' ? 'Cliquez sur le code-barres pour récupérer la photo' : 'Click barcode to retrieve photo') + '</div>';
+                    html += '<div class="date-suggestion" style="margin-top: 5px;">💡 ' + (currentLang === 'fr' ? 'Cliquez sur le code-barres pour récupérer photo + scores santé' : 'Click barcode to retrieve photo + health scores') + '</div>';
                 }
             }
             
@@ -3383,12 +3912,12 @@
                     '<div class="form-group">' +
                     '<label for="formEmplacement">' + t('form.location') + '</label>' +
                     '<select id="formEmplacement">' +
-                    '<option value="frigo"' + (productData.emplacement === 'frigo' || !productData.emplacement ? ' selected' : '') + '>🧊 ' + t('locations.frigo') + '</option>' +
-                    '<option value="congelateur"' + (productData.emplacement === 'congelateur' ? ' selected' : '') + '>❄️ ' + t('locations.congelateur') + '</option>' +
-                    '<option value="placard"' + (productData.emplacement === 'placard' ? ' selected' : '') + '>🚪 ' + t('locations.placard') + '</option>' +
-                    '<option value="cave"' + (productData.emplacement === 'cave' ? ' selected' : '') + '>🍷 ' + (currentLang === 'fr' ? 'Cave' : 'Cellar') + '</option>' +
-                    '<option value="corbeille"' + (productData.emplacement === 'corbeille' ? ' selected' : '') + '>🧺 ' + (currentLang === 'fr' ? 'Corbeille' : 'Basket') + '</option>' +
-                    '<option value="autre_emplacement"' + (productData.emplacement === 'autre_emplacement' ? ' selected' : '') + '>📍 ' + t('locations.autre') + '</option>' +
+                    '<option value="frigo"' + (defaultEmplacement === 'frigo' ? ' selected' : '') + '>🧊 ' + t('locations.frigo') + '</option>' +
+                    '<option value="congelateur"' + (defaultEmplacement === 'congelateur' ? ' selected' : '') + '>❄️ ' + t('locations.congelateur') + '</option>' +
+                    '<option value="placard"' + (defaultEmplacement === 'placard' ? ' selected' : '') + '>🚪 ' + t('locations.placard') + '</option>' +
+                    '<option value="cave"' + (defaultEmplacement === 'cave' ? ' selected' : '') + '>🍷 ' + (currentLang === 'fr' ? 'Cave' : 'Cellar') + '</option>' +
+                    '<option value="corbeille"' + (defaultEmplacement === 'corbeille' ? ' selected' : '') + '>🧺 ' + (currentLang === 'fr' ? 'Corbeille' : 'Basket') + '</option>' +
+                    '<option value="autre_emplacement"' + (defaultEmplacement === 'autre_emplacement' ? ' selected' : '') + '>📍 ' + t('locations.autre') + '</option>' +
                     '</select>' +
                     '</div>' +
                     '<div class="form-group">' +
@@ -3415,26 +3944,13 @@
             document.getElementById('actions').style.display = 'none';
             document.getElementById('stats').style.display = 'none';
             
-            // Recalcul automatique de la date lors du changement d'emplacement ou catégorie
-            setTimeout(function() {
-                var selectEmpl = document.getElementById('formEmplacement');
-                var selectCat = document.getElementById('formCategorie');
-                var dateIn = document.getElementById('formDate');
-                
-                function updateDate() {
-                    if (!selectEmpl || !selectCat || !dateIn) return;
-                    var cat = selectCat.value;
-                    var empl = selectEmpl.value;
-                    dateIn.value = calculerNouvelleDate(cat, empl);
-                }
-                
-                if (selectEmpl) selectEmpl.onchange = updateDate;
-                if (selectCat) selectCat.onchange = updateDate;
-            }, 200);
-            
             // Gestion de la photo personnalisée
             var customImageData = productData.image || null;
             var savedBarcode = productData.barcode || null; // Sauvegarder le barcode dans la portée
+            var savedNutriScore = productData.nutriScore || null;
+            var savedNovaGroup = productData.novaGroup || null;
+            var savedAdditives = productData.additives !== undefined ? productData.additives : null;
+            var savedEcoScore = productData.ecoScore || null;
             
             // Bouton pour supprimer la photo (si elle existe)
             var btnRemovePhoto = document.getElementById('btnRemovePhoto');
@@ -3483,68 +3999,139 @@
             if (barcodeBadgeAdd && productData.barcode) {
                 barcodeBadgeAdd.onclick = function() {
                     var msg = currentLang === 'fr' ? 
-                        'Récupérer la photo depuis la base de données ?\n\nCela téléchargera la photo du produit.' :
-                        'Retrieve photo from database?\n\nThis will download the product photo.';
+                        'Récupérer les données depuis la base de données ?\n\n• Photo du produit\n• Scores de santé (Nutri-Score, NOVA, Additifs, Eco-Score)\n\n⏳ Patientez pendant le chargement...' :
+                        'Retrieve data from database?\n\n• Product photo\n• Health scores (Nutri-Score, NOVA, Additives, Eco-Score)\n\n⏳ Please wait during loading...';
                     
                     if (confirm(msg)) {
-                        // Afficher un loader
+                        // Afficher un loader visible
                         var badge = document.getElementById('barcodeBadgeAdd');
                         var originalText = badge.innerHTML;
-                        badge.innerHTML = '⏳ ' + (currentLang === 'fr' ? 'Chargement...' : 'Loading...');
-                        badge.style.background = '#fff3cd';
+                        var originalBg = badge.style.background;
+                        badge.innerHTML = '⏳ ' + (currentLang === 'fr' ? 'Chargement en cours...' : 'Loading...');
+                        badge.style.background = '#fbbf24';
+                        badge.style.animation = 'pulse 1.5s infinite';
+                        
+                        // Afficher l'écran de loading
+                        document.getElementById('loading').classList.add('active');
+                        document.getElementById('loadingBarcode').textContent = (currentLang === 'fr' ? 'Récupération des données...' : 'Retrieving data...');
                         
                         // Appeler l'API Open Food Facts
-                        fetch('https://world.openfoodfacts.org/api/v0/product/' + productData.barcode + '.json')
+                        fetch('https://world.openfoodfacts.org/api/v2/product/' + productData.barcode + '.json')
                             .then(function(response) { return response.json(); })
                             .then(function(data) {
-                                if (data.status === 1 && data.product && data.product.image_url) {
-                                    customImageData = data.product.image_url;
+                                document.getElementById('loading').classList.remove('active');
+                                
+                                if (data.status === 1 && data.product) {
+                                    var product = data.product;
+                                    var updates = [];
                                     
-                                    // Mettre à jour l'aperçu
-                                    var preview = document.getElementById('previewImage');
-                                    preview.outerHTML = '<img src="' + customImageData + '" class="preview-img" id="previewImage">' +
-                                        '<button type="button" class="btn" id="btnRemovePhoto" style="background:#ef4444;padding:10px;font-size:14px;margin:5px 0;">✕ ' + (currentLang === 'fr' ? 'Supprimer la photo' : 'Remove photo') + '</button>';
-                                    
-                                    // Réattacher l'event listener au nouveau bouton
-                                    var newBtnRemove = document.getElementById('btnRemovePhoto');
-                                    if (newBtnRemove) {
-                                        newBtnRemove.onclick = function() {
-                                            if (confirm(currentLang === 'fr' ? 'Supprimer la photo ?\nCela économisera de l\'espace de stockage.' : 'Remove photo?\nThis will save storage space.')) {
-                                                customImageData = null;
-                                                var preview = document.getElementById('previewImage');
-                                                preview.outerHTML = '<div id="previewImage" class="preview-placeholder">📷 ' + (currentLang === 'fr' ? 'Aucune photo' : 'No photo') + '</div>';
-                                                document.querySelector('label[for="customPhoto"]').innerHTML = '📸 ' + (currentLang === 'fr' ? 'Prendre la photo' : 'Take photo');
-                                                newBtnRemove.style.display = 'none';
-                                            }
-                                        };
+                                    // Récupérer la photo
+                                    if (product.image_url) {
+                                        customImageData = product.image_url;
+                                        
+                                        // Mettre à jour l'aperçu
+                                        var preview = document.getElementById('previewImage');
+                                        preview.outerHTML = '<img src="' + customImageData + '" class="preview-img" id="previewImage">' +
+                                            '<button type="button" class="btn" id="btnRemovePhoto" style="background:#ef4444;padding:10px;font-size:14px;margin:5px 0;">✕ ' + (currentLang === 'fr' ? 'Supprimer la photo' : 'Remove photo') + '</button>';
+                                        
+                                        // Réattacher l'event listener au nouveau bouton
+                                        var newBtnRemove = document.getElementById('btnRemovePhoto');
+                                        if (newBtnRemove) {
+                                            newBtnRemove.onclick = function() {
+                                                if (confirm(currentLang === 'fr' ? 'Supprimer la photo ?\nCela économisera de l\'espace de stockage.' : 'Remove photo?\nThis will save storage space.')) {
+                                                    customImageData = null;
+                                                    var preview = document.getElementById('previewImage');
+                                                    preview.outerHTML = '<div id="previewImage" class="preview-placeholder">📷 ' + (currentLang === 'fr' ? 'Aucune photo' : 'No photo') + '</div>';
+                                                    document.querySelector('label[for="customPhoto"]').innerHTML = '📸 ' + (currentLang === 'fr' ? 'Prendre la photo' : 'Take photo');
+                                                    newBtnRemove.style.display = 'none';
+                                                }
+                                            };
+                                        }
+                                        
+                                        // Changer le texte du bouton photo
+                                        document.querySelector('label[for="customPhoto"]').innerHTML = '📸 ' + (currentLang === 'fr' ? 'Changer la photo' : 'Change photo');
+                                        
+                                        updates.push(currentLang === 'fr' ? 'Photo' : 'Photo');
                                     }
                                     
-                                    // Changer le texte du bouton photo
-                                    document.querySelector('label[for="customPhoto"]').innerHTML = '📸 ' + (currentLang === 'fr' ? 'Changer la photo' : 'Change photo');
+                                    // Récupérer Nutri-Score
+                                    if (product.nutriscore_grade) {
+                                        var nutriTemp = product.nutriscore_grade.toUpperCase();
+                                        // Ignorer les valeurs non valides
+                                        if (nutriTemp !== 'NOT-APPLICABLE' && nutriTemp !== 'UNKNOWN' && nutriTemp !== 'NOT-KNOWN' && nutriTemp.match(/^[A-E]$/)) {
+                                            savedNutriScore = nutriTemp;
+                                            updates.push('Nutri-Score ' + savedNutriScore);
+                                        }
+                                    }
+                                    
+                                    // Récupérer NOVA
+                                    if (product.nova_group) {
+                                        savedNovaGroup = product.nova_group;
+                                        updates.push('NOVA ' + savedNovaGroup);
+                                    }
+                                    
+                                    // Récupérer Additifs
+                                    if (product.additives_n !== undefined) {
+                                        savedAdditives = product.additives_n;
+                                        updates.push((savedAdditives === 0 ? (currentLang === 'fr' ? 'Sans additif' : 'No additives') : savedAdditives + ' ' + (currentLang === 'fr' ? 'additifs' : 'additives')));
+                                    }
+                                    
+                                    // Récupérer Eco-Score
+                                    var ecoScore = null;
+                                    if (product.ecoscore_grade) {
+                                        var ecoValue = product.ecoscore_grade.toUpperCase();
+                                        // Nettoyer les valeurs bizarres comme "A-PLUS" → "A"
+                                        ecoValue = ecoValue.replace('-PLUS', '').replace('-MINUS', '').trim();
+                                        // Vérifier que c'est une lettre A-F valide
+                                        if (ecoValue.match(/^[A-F]$/) && ecoValue !== 'NOT-APPLICABLE' && ecoValue !== 'UNKNOWN') {
+                                            ecoScore = ecoValue;
+                                        }
+                                    } else if (product.ecoscore_score !== undefined && product.ecoscore_score !== null) {
+                                        if (product.ecoscore_score >= 80) ecoScore = 'A';
+                                        else if (product.ecoscore_score >= 60) ecoScore = 'B';
+                                        else if (product.ecoscore_score >= 40) ecoScore = 'C';
+                                        else if (product.ecoscore_score >= 20) ecoScore = 'D';
+                                        else if (product.ecoscore_score >= 0) ecoScore = 'E';
+                                    }
+                                    if (ecoScore) {
+                                        savedEcoScore = ecoScore;
+                                        updates.push('Eco-Score ' + ecoScore);
+                                    }
                                     
                                     // Restaurer le badge
                                     badge.innerHTML = originalText;
-                                    badge.style.background = '#e8f5e9';
+                                    badge.style.background = originalBg;
+                                    badge.style.animation = '';
                                     
-                                    var successMsg = currentLang === 'fr' ? 
-                                        '✅ Photo récupérée avec succès !' :
-                                        '✅ Photo retrieved successfully!';
-                                    alert(successMsg);
+                                    if (updates.length > 0) {
+                                        var successMsg = currentLang === 'fr' ? 
+                                            '✅ Données récupérées !\n\n' + updates.join('\n') + '\n\n💾 Cliquez sur "Ajouter" pour sauvegarder le produit.' :
+                                            '✅ Data retrieved!\n\n' + updates.join('\n') + '\n\n💾 Click "Add" to save the product.';
+                                        alert(successMsg);
+                                    } else {
+                                        var noDataMsg = currentLang === 'fr' ?
+                                            '⚠️ Aucune donnée supplémentaire disponible.' :
+                                            '⚠️ No additional data available.';
+                                        alert(noDataMsg);
+                                    }
                                 } else {
                                     badge.innerHTML = originalText;
-                                    badge.style.background = '#e8f5e9';
-                                    var noPhotoMsg = currentLang === 'fr' ?
-                                        '❌ Aucune photo disponible pour ce produit.' :
-                                        '❌ No photo available for this product.';
-                                    alert(noPhotoMsg);
+                                    badge.style.background = originalBg;
+                                    badge.style.animation = '';
+                                    var noDataMsg = currentLang === 'fr' ?
+                                        '❌ Produit non trouvé dans la base de données.' :
+                                        '❌ Product not found in database.';
+                                    alert(noDataMsg);
                                 }
                             })
                             .catch(function(error) {
+                                document.getElementById('loading').classList.remove('active');
                                 badge.innerHTML = originalText;
-                                badge.style.background = '#e8f5e9';
+                                badge.style.background = originalBg;
+                                badge.style.animation = '';
                                 var errorMsg = currentLang === 'fr' ?
-                                    '❌ Erreur lors de la récupération de la photo.' :
-                                    '❌ Error retrieving photo.';
+                                    '❌ Erreur lors de la récupération des données.\n\nVérifiez votre connexion Internet.' :
+                                    '❌ Error retrieving data.\n\nCheck your Internet connection.';
                                 alert(errorMsg);
                                 console.error(error);
                             });
@@ -3606,7 +4193,11 @@
                     aRenouveler: document.getElementById('formRenouveler').checked,
                     dateAjout: new Date().toISOString().split('T')[0],
                     image: customImageData,
-                    barcode: savedBarcode
+                    barcode: savedBarcode,
+                    nutriScore: savedNutriScore,
+                    novaGroup: savedNovaGroup,
+                    additives: savedAdditives,
+                    ecoScore: savedEcoScore
                 };
                 
                 items.unshift(newItem);
@@ -3627,6 +4218,57 @@
         function toggleSettings() {
             var menu = document.getElementById('settingsMenu');
             menu.classList.toggle('active');
+        }
+        
+        function showHealthGuide() {
+            // Fermer le menu des paramètres
+            document.getElementById('settingsMenu').classList.remove('active');
+            // Ouvrir le guide
+            document.getElementById('healthGuide').classList.add('active');
+        }
+        
+        function closeHealthGuide() {
+            document.getElementById('healthGuide').classList.remove('active');
+        }
+        
+        function showChangelog() {
+            // Fermer le menu des paramètres
+            document.getElementById('settingsMenu').classList.remove('active');
+            
+            // Générer le contenu du changelog
+            var html = '<h3 style="margin-top: 0; color: #667eea;">🎉 Quoi de neuf ?</h3>';
+            
+            // Parcourir toutes les versions du changelog
+            for (var version in CHANGELOG) {
+                var versionData = CHANGELOG[version];
+                var changes = versionData.changes[currentLang];
+                var isLatest = version === APP_VERSION;
+                
+                html += '<div class="settings-section" style="' + (isLatest ? 'background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 2px solid #3b82f6;' : '') + '">';
+                html += '<h4 style="color: ' + (isLatest ? '#1e40af' : '#667eea') + ';">';
+                if (isLatest) html += '✨ ';
+                html += 'Version ' + version;
+                if (isLatest) html += ' (Actuelle)';
+                html += '</h4>';
+                html += '<p style="font-size: 0.85em; color: #64748b; margin-bottom: 10px;">📅 ' + versionData.date + '</p>';
+                html += '<ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9em;">';
+                
+                changes.forEach(function(change) {
+                    html += '<li style="margin: 8px 0; color: #334155;">' + change + '</li>';
+                });
+                
+                html += '</ul></div>';
+            }
+            
+            html += '<button class="btn" onclick="closeChangelog()" style="background: #667eea; color: white; margin-top: 20px;">✕ Fermer</button>';
+            
+            // Afficher dans une modal
+            document.getElementById('changelogContent').innerHTML = html;
+            document.getElementById('changelogModal').classList.add('active');
+        }
+        
+        function closeChangelog() {
+            document.getElementById('changelogModal').classList.remove('active');
         }
         
         // === FONCTIONS EXPORT/IMPORT RECETTES CSV ===
@@ -3814,7 +4456,11 @@
                         'Catégorie': item.categorie || '',
                         'Emplacement': item.emplacement || '',
                         'Quantité': item.quantite || 0,
-                        'À renouveler': item.aRenouveler ? 'Oui' : 'Non'
+                        'À renouveler': item.aRenouveler ? 'Oui' : 'Non',
+                        'Nutri-Score': item.nutriScore || '',
+                        'NOVA': item.novaGroup || '',
+                        'Additifs': item.additives !== undefined && item.additives !== null ? item.additives : '',
+                        'Eco-Score': item.ecoScore || ''
                     };
                 });
                 
@@ -3833,7 +4479,11 @@
                     {wch: 15},  // Catégorie
                     {wch: 15},  // Emplacement
                     {wch: 10},  // Quantité
-                    {wch: 12}   // À renouveler
+                    {wch: 12},  // À renouveler
+                    {wch: 12},  // Nutri-Score
+                    {wch: 8},   // NOVA
+                    {wch: 10},  // Additifs
+                    {wch: 12}   // Eco-Score
                 ];
                 ws['!cols'] = wscols;
                 
@@ -3903,6 +4553,10 @@
                             emplacement: row['Emplacement'] || 'frigo',
                             quantite: parseInt(row['Quantité']) || 1,
                             aRenouveler: row['À renouveler'] === 'Oui',
+                            nutriScore: row['Nutri-Score'] || null,
+                            novaGroup: row['NOVA'] ? parseInt(row['NOVA']) : null,
+                            additives: row['Additifs'] !== undefined && row['Additifs'] !== '' ? parseInt(row['Additifs']) : null,
+                            ecoScore: row['Eco-Score'] || null,
                             image: null
                         };
                     });
@@ -4461,13 +5115,17 @@
             
             html += '</ol></div>';
             
-            // Ajouter les boutons modifier/supprimer si c'est une recette utilisateur
+            // Afficher les boutons pour TOUTES les recettes
+            // Les recettes par défaut seront copiées en recettes utilisateur lors de la modification
+            html += '<div class="recipe-actions-bar">' +
+                   '<button class="btn" onclick="editRecipe(' + recipeId + ')" style="background: #f59e0b; flex: 1;">' + t('recipes.edit') + '</button>';
+            
+            // Bouton supprimer seulement pour les recettes utilisateur (pas les recettes par défaut)
             if (isUserRecipe) {
-                html += '<div class="recipe-actions-bar">' +
-                       '<button class="btn" onclick="editRecipe(' + recipeId + ')" style="background: #f59e0b; flex: 1;">' + t('recipes.edit') + '</button>' +
-                       '<button class="btn" onclick="deleteRecipe(' + recipeId + ')" style="background: #ef4444; flex: 1;">' + t('recipes.deleteBtn') + '</button>' +
-                       '</div>';
+                html += '<button class="btn" onclick="deleteRecipe(' + recipeId + ')" style="background: #ef4444; flex: 1;">' + t('recipes.deleteBtn') + '</button>';
             }
+            
+            html += '</div>';
             
             document.getElementById('recipeDetailBody').innerHTML = html;
             document.getElementById('recipeDetailModal').classList.add('active');
@@ -4646,16 +5304,39 @@
         }
         
         function editRecipe(recipeId) {
-            var recipe = userRecipes.find(function(r) { return r.id === recipeId; });
+            var allRecipes = getAllRecipes();
+            var recipe = allRecipes.find(function(r) { return r.id === recipeId; });
             if (!recipe) return;
             
-            currentEditingRecipeId = recipeId;
+            var isUserRecipe = recipeId >= 1000;
+            
+            // Si c'est une recette par défaut, on va la dupliquer en recette utilisateur
+            if (!isUserRecipe) {
+                // Informer l'utilisateur
+                var message = currentLang === 'fr' 
+                    ? '💡 Cette recette par défaut sera copiée.\n\nVos modifications créeront une nouvelle recette personnalisée.\n\nContinuer ?' 
+                    : '💡 This default recipe will be copied.\n\nYour changes will create a new custom recipe.\n\nContinue?';
+                
+                if (!confirm(message)) {
+                    return;
+                }
+                
+                // Créer un nouvel ID pour la copie
+                currentEditingRecipeId = null; // Cela créera une nouvelle recette
+            } else {
+                currentEditingRecipeId = recipeId;
+            }
             
             // Fermer le détail
             closeRecipeDetail();
             
             // Remplir le formulaire
-            document.getElementById('createRecipeTitle').textContent = currentLang === 'fr' ? '✏️ Modifier la recette' : '✏️ Edit recipe';
+            var title = currentLang === 'fr' ? '✏️ Modifier la recette' : '✏️ Edit recipe';
+            if (!isUserRecipe) {
+                title = currentLang === 'fr' ? '📋 Copie de la recette' : '📋 Copy recipe';
+            }
+            document.getElementById('createRecipeTitle').textContent = title;
+            
             document.getElementById('recipeNameInput').value = recipe.name;
             document.getElementById('recipeIconInput').value = recipe.icon;
             document.getElementById('selectedEmoji').textContent = recipe.icon;
@@ -4748,6 +5429,9 @@
             document.getElementById('stats').style.display = 'grid';
             currentBarcode = null;
             currentProductData = null;
+            
+            // Rafraîchir l'affichage pour montrer les changements (photo, scores, etc.)
+            renderAll();
         }
         
         function editItem(itemId) {
@@ -4760,9 +5444,8 @@
             
             if (item.barcode) {
                 html += '<div class="barcode-badge clickable" id="barcodeBadge" style="display: inline-block;">📊 ' + item.barcode + '</div>';
-                if (!item.image) {
-                    html += '<div class="date-suggestion" style="margin-top: 5px;">💡 Cliquez sur le code-barres pour récupérer la photo</div>';
-                }
+                // Toujours afficher le message pour indiquer que le code-barres est cliquable
+                html += '<div class="date-suggestion" style="margin-top: 5px;">💡 Cliquez sur le code-barres pour récupérer photo + scores santé</div>';
             }
             
             html += '<div class="form-group">';
@@ -4835,23 +5518,6 @@
             document.getElementById('actions').style.display = 'none';
             document.getElementById('stats').style.display = 'none';
             
-            // Recalcul automatique de la date lors du changement d'emplacement ou catégorie
-            setTimeout(function() {
-                var selectEmpl = document.getElementById('formEmplacement');
-                var selectCat = document.getElementById('formCategorie');
-                var dateIn = document.getElementById('formDate');
-                
-                function updateDate() {
-                    if (!selectEmpl || !selectCat || !dateIn) return;
-                    var cat = selectCat.value;
-                    var empl = selectEmpl.value;
-                    dateIn.value = calculerNouvelleDate(cat, empl);
-                }
-                
-                if (selectEmpl) selectEmpl.onchange = updateDate;
-                if (selectCat) selectCat.onchange = updateDate;
-            }, 200);
-            
             // Gestion de la photo personnalisée
             var customImageData = item.image || null;
             
@@ -4897,61 +5563,165 @@
                 });
             }
             
-            // Event listener pour cliquer sur le code-barres et récupérer la photo
+            // Event listener pour cliquer sur le code-barres et récupérer la photo + scores
             var barcodeBadge = document.getElementById('barcodeBadge');
             if (barcodeBadge && item.barcode) {
+                var fetchInProgress = false; // Empêcher les clics multiples
+                
                 barcodeBadge.onclick = function() {
-                    if (confirm('Récupérer la photo depuis la base de données ?\n\nCela téléchargera la photo du produit.')) {
-                        // Afficher un loader
+                    // Empêcher les clics multiples
+                    if (fetchInProgress) {
+                        alert('⏳ Récupération en cours...\n\nVeuillez patienter.');
+                        return;
+                    }
+                    
+                    if (confirm('Récupérer les données depuis la base de données ?\n\n• Photo du produit\n• Scores de santé (Nutri-Score, NOVA, Additifs, Eco-Score)\n\n⏳ Patientez pendant le chargement...')) {
+                        fetchInProgress = true; // Bloquer les autres clics
+                        
+                        // Afficher un loader visible
                         var badge = document.getElementById('barcodeBadge');
                         var originalText = badge.innerHTML;
-                        badge.innerHTML = '⏳ Chargement...';
-                        badge.style.background = '#fff3cd';
+                        var originalBg = badge.style.background;
+                        badge.innerHTML = '⏳ Chargement en cours...';
+                        badge.style.background = '#fbbf24';
+                        badge.style.animation = 'pulse 1.5s infinite';
+                        
+                        // Afficher l'écran de loading
+                        document.getElementById('loading').classList.add('active');
+                        document.getElementById('loadingBarcode').textContent = 'Récupération des données...';
                         
                         // Appeler l'API Open Food Facts
-                        fetch('https://world.openfoodfacts.org/api/v0/product/' + item.barcode + '.json')
+                        fetch('https://world.openfoodfacts.org/api/v2/product/' + item.barcode + '.json')
                             .then(function(response) { return response.json(); })
                             .then(function(data) {
-                                if (data.status === 1 && data.product && data.product.image_url) {
-                                    customImageData = data.product.image_url;
+                                document.getElementById('loading').classList.remove('active');
+                                
+                                if (data.status === 1 && data.product) {
+                                    var product = data.product;
+                                    var updates = [];
                                     
-                                    // Mettre à jour l'aperçu
-                                    var preview = document.getElementById('previewImage');
-                                    preview.outerHTML = '<img src="' + customImageData + '" class="preview-img" id="previewImage">' +
-                                        '<button type="button" class="btn" id="btnRemovePhoto" style="background:#ef4444;padding:10px;font-size:14px;margin:5px 0;">✕ Supprimer la photo</button>';
-                                    
-                                    // Réattacher l'event listener au nouveau bouton
-                                    var newBtnRemove = document.getElementById('btnRemovePhoto');
-                                    if (newBtnRemove) {
-                                        newBtnRemove.onclick = function() {
+                                    // Récupérer la photo
+                                    if (product.image_url) {
+                                        customImageData = product.image_url;
+                                        
+                                        // Mettre à jour l'aperçu
+                                        var preview = document.getElementById('previewImage');
+                                        var existingBtn = document.getElementById('btnRemovePhoto');
+                                        
+                                        // Si preview est une image, juste changer le src
+                                        if (preview.tagName === 'IMG') {
+                                            preview.src = customImageData;
+                                        } else {
+                                            // Sinon (c'était un placeholder), remplacer par une image
+                                            preview.outerHTML = '<img src="' + customImageData + '" class="preview-img" id="previewImage">';
+                                        }
+                                        
+                                        // Créer ou afficher le bouton supprimer
+                                        if (!existingBtn) {
+                                            // Créer le bouton s'il n'existe pas
+                                            var btn = document.createElement('button');
+                                            btn.type = 'button';
+                                            btn.className = 'btn';
+                                            btn.id = 'btnRemovePhoto';
+                                            btn.style.cssText = 'background:#ef4444;padding:10px;font-size:14px;margin:5px 0;';
+                                            btn.textContent = '✕ Supprimer la photo';
+                                            document.getElementById('previewImage').parentNode.insertBefore(btn, document.getElementById('customPhoto'));
+                                            existingBtn = btn;
+                                        } else {
+                                            existingBtn.style.display = 'block';
+                                        }
+                                        
+                                        // Attacher l'event listener
+                                        existingBtn.onclick = function() {
                                             if (confirm('Supprimer la photo ?\nCela économisera de l\'espace de stockage.')) {
                                                 customImageData = null;
                                                 var preview = document.getElementById('previewImage');
                                                 preview.outerHTML = '<div id="previewImage" class="preview-placeholder">📷 Aucune photo</div>';
                                                 document.querySelector('label[for="customPhoto"]').innerHTML = '📸 Prendre la photo';
-                                                newBtnRemove.style.display = 'none';
+                                                this.style.display = 'none';
                                             }
                                         };
+                                        
+                                        // Changer le texte du bouton photo
+                                        document.querySelector('label[for="customPhoto"]').innerHTML = '📸 Changer la photo';
+                                        
+                                        updates.push('Photo');
                                     }
                                     
-                                    // Changer le texte du bouton photo
-                                    document.querySelector('label[for="customPhoto"]').innerHTML = '📸 Changer la photo';
+                                    // Récupérer Nutri-Score
+                                    if (product.nutriscore_grade) {
+                                        var nutriValue = product.nutriscore_grade.toUpperCase();
+                                        // Ignorer les valeurs non valides
+                                        if (nutriValue !== 'NOT-APPLICABLE' && nutriValue !== 'UNKNOWN' && nutriValue !== 'NOT-KNOWN') {
+                                            item.nutriScore = nutriValue;
+                                            updates.push('Nutri-Score ' + item.nutriScore);
+                                        }
+                                    }
+                                    
+                                    // Récupérer NOVA
+                                    if (product.nova_group) {
+                                        item.novaGroup = product.nova_group;
+                                        updates.push('NOVA ' + item.novaGroup);
+                                    }
+                                    
+                                    // Récupérer Additifs
+                                    if (product.additives_n !== undefined) {
+                                        item.additives = product.additives_n;
+                                        updates.push((item.additives === 0 ? 'Sans additif' : item.additives + ' additifs'));
+                                    }
+                                    
+                                    // Récupérer Eco-Score
+                                    var ecoScore = null;
+                                    if (product.ecoscore_grade) {
+                                        var ecoValue = product.ecoscore_grade.toUpperCase();
+                                        // Nettoyer les valeurs bizarres comme "A-PLUS" → "A"
+                                        ecoValue = ecoValue.replace('-PLUS', '').replace('-MINUS', '').trim();
+                                        // Ignorer les valeurs non valides
+                                        if (ecoValue !== 'NOT-APPLICABLE' && ecoValue !== 'UNKNOWN' && ecoValue !== 'NOT-KNOWN' && ecoValue.match(/^[A-F]$/)) {
+                                            ecoScore = ecoValue;
+                                        }
+                                    } else if (product.ecoscore_score !== undefined && product.ecoscore_score !== null) {
+                                        if (product.ecoscore_score >= 80) ecoScore = 'A';
+                                        else if (product.ecoscore_score >= 60) ecoScore = 'B';
+                                        else if (product.ecoscore_score >= 40) ecoScore = 'C';
+                                        else if (product.ecoscore_score >= 20) ecoScore = 'D';
+                                        else if (product.ecoscore_score >= 0) ecoScore = 'E';
+                                    }
+                                    if (ecoScore) {
+                                        item.ecoScore = ecoScore;
+                                        updates.push('Eco-Score ' + ecoScore);
+                                    }
                                     
                                     // Restaurer le badge
                                     badge.innerHTML = originalText;
-                                    badge.style.background = '#e8f5e9';
+                                    badge.style.background = originalBg;
+                                    badge.style.animation = '';
                                     
-                                    alert('✅ Photo récupérée avec succès !');
+                                    if (updates.length > 0) {
+                                        // IMPORTANT : Sauvegarder automatiquement les modifications
+                                        saveItems();
+                                        alert('✅ Données récupérées et sauvegardées !\n\n' + updates.join('\n'));
+                                        // NE PAS rafraîchir ici - attendre que l'utilisateur ferme le formulaire
+                                        // renderAll(); ← SUPPRIMÉ pour éviter les conflits
+                                    } else {
+                                        alert('⚠️ Aucune donnée supplémentaire disponible.');
+                                    }
+                                    fetchInProgress = false; // Débloquer
                                 } else {
                                     badge.innerHTML = originalText;
-                                    badge.style.background = '#e8f5e9';
-                                    alert('❌ Aucune photo disponible pour ce produit.');
+                                    badge.style.background = originalBg;
+                                    badge.style.animation = '';
+                                    alert('❌ Produit non trouvé dans la base de données.');
+                                    fetchInProgress = false; // Débloquer
                                 }
                             })
                             .catch(function(error) {
+                                document.getElementById('loading').classList.remove('active');
                                 badge.innerHTML = originalText;
-                                badge.style.background = '#e8f5e9';
-                                alert('❌ Erreur lors de la récupération de la photo.');
+                                badge.style.background = originalBg;
+                                badge.style.animation = '';
+                                fetchInProgress = false; // Débloquer
+                                alert('❌ Erreur lors de la récupération des données.\n\nVérifiez votre connexion Internet.');
                                 console.error(error);
                             });
                     }
@@ -5008,6 +5778,8 @@
                     items[index].quantite = parseInt(document.getElementById('formQuantite').value) || 0;
                     items[index].aRenouveler = document.getElementById('formRenouveler').checked;
                     items[index].image = customImageData;
+                    // Préserver les données de santé (ne pas les écraser)
+                    // items[index].nutriScore, novaGroup, additives, ecoScore, barcode restent inchangés
                 }
                 
                 saveItems();
@@ -5120,55 +5892,52 @@
         
         // Champ de recherche
         var searchInput = document.getElementById('searchInput');
+        var searchBtn = document.getElementById('searchButton');
         var clearBtn = document.getElementById('clearSearch');
         var historyEl = document.getElementById('searchHistory');
         
-        searchInput.addEventListener('input', function(e) {
-            var value = e.target.value.trim();
+        /* 
+        DÉSACTIVÉ - On utilise onclick HTML à la place
+        
+        // Test que les éléments existent
+        if (!searchInput) alert('❌ searchInput introuvable');
+        if (!searchBtn) alert('❌ searchBtn introuvable');
+        if (!clearBtn) alert('❌ clearBtn introuvable');
+        
+        // Fonction de recherche réutilisable
+        function handleSearch() {
+            alert('✅ handleSearch() appelée !');
+            
+            var value = searchInput.value.trim();
             currentSearchTerm = value;
+            
+            alert('🔍 Valeur recherchée: "' + value + '"');
             
             // Afficher/cacher le bouton clear
             clearBtn.style.display = value ? 'flex' : 'none';
             
+            alert('📋 Appel de renderItems()...');
             renderItems();
-        });
-        
-        searchInput.addEventListener('focus', function() {
-            if (!currentSearchTerm) {
-                renderSearchHistory();
+            alert('✅ renderItems() terminé !');
+            
+            // Ajouter à l'historique si recherche non vide
+            if (value) {
+                addToSearchHistory(value);
             }
-        });
+        }
         
-        searchInput.addEventListener('blur', function() {
-            // Attendre un peu avant de cacher pour permettre les clics
-            setTimeout(function() {
-                historyEl.style.display = 'none';
-            }, 200);
-        });
-        
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && currentSearchTerm) {
-                addToSearchHistory(currentSearchTerm);
-                searchInput.blur();
-            }
-            if (e.key === 'Escape') {
-                searchInput.value = '';
-                currentSearchTerm = '';
-                clearBtn.style.display = 'none';
-                renderItems();
-                searchInput.blur();
-            }
-        });
-        
-        clearBtn.onclick = function() {
-            searchInput.value = '';
-            currentSearchTerm = '';
-            clearBtn.style.display = 'none';
-            renderItems();
-            searchInput.focus();
+        // BOUTON GO - Recherche manuelle (parfait pour iOS)
+        searchBtn.onclick = function() {
+            alert('🎯 Bouton GO cliqué !');
+            handleSearch();
+            searchInput.blur(); // Fermer le clavier sur mobile
         };
+        */
         
-        // Raccourci clavier Ctrl+F / Cmd+F
+        // AUCUN event listener - Seulement onclick HTML
+        // (Recherche déclenchée UNIQUEMENT par le bouton GO)
+        
+        // Raccourci clavier Ctrl+F / Cmd+F pour focus
         document.addEventListener('keydown', function(e) {
             if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
                 e.preventDefault();
@@ -5210,18 +5979,8 @@
         renderAll();
         setLanguage(currentLang); // Initialize language
         
-        // Enregistrer le Service Worker pour PWA
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(function(registration) {
-                        console.log('Service Worker enregistré avec succès:', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.log('Échec de l\'enregistrement du Service Worker:', error);
-                    });
-            });
-        }
+        // Afficher la version
+        document.getElementById('versionDisplay').textContent = 'Version ' + APP_VERSION;
     </script>
 </body>
 </html>
